@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feliz Cumpleaños ❤️</title>
+<style>
+  /* ============================================================
+     FUENTES
+  ============================================================ */
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap');
+
+  /* ============================================================
+     RESET & BASE
+  ============================================================ */
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --rose:    #e8a0b4;
+    --rose2:   #f5c6d8;
+    --rose3:   #fce8ef;
+    --gold:    #d4a04c;
+    --gold2:   #f0d080;
+    --cream:   #fff8f2;
+    --dark:    #4a2030;
+    --text:    #3a1828;
+  }
+
+  html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Lato', sans-serif; }
+
+  /* ============================================================
+     FONDO ANIMADO
+  ============================================================ */
+  body {
+    background: linear-gradient(135deg, #2a0a18 0%, #4d1a2e 40%, #1a0a20 100%);
+    color: var(--cream);
+  }
+
+  /* Estrellas de fondo */
+  #stars-canvas {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  }
+
+  /* ============================================================
+     PANTALLAS / VISTAS
+  ============================================================ */
+  .screen {
+    position: fixed; inset: 0; z-index: 10;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .screen.hidden {
+    opacity: 0; pointer-events: none; transform: scale(0.96);
+  }
+
+  /* ============================================================
+     PANTALLA INICIAL
+  ============================================================ */
+  #screen-intro {
+    text-align: center;
+    padding: 2rem;
+  }
+  #screen-intro .heart-big {
+    font-size: clamp(4rem, 12vw, 8rem);
+    animation: heartbeat 1.4s ease-in-out infinite;
+    display: block;
+    margin-bottom: 1rem;
+    filter: drop-shadow(0 0 20px rgba(232, 160, 180, 0.8));
+  }
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    14%  { transform: scale(1.15); }
+    28%  { transform: scale(1); }
+    42%  { transform: scale(1.1); }
+    56%  { transform: scale(1); }
+  }
+  #screen-intro h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 5vw, 3rem);
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: var(--cream);
+    text-shadow: 0 0 30px rgba(232,160,180,0.6);
+    margin-bottom: 0.5rem;
+    animation: fadeUp 1.2s ease both;
+  }
+  #screen-intro p {
+    font-size: clamp(0.9rem, 2.5vw, 1.15rem);
+    color: var(--rose2);
+    margin-bottom: 2.5rem;
+    letter-spacing: 0.08em;
+    animation: fadeUp 1.4s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .btn-start {
+    background: linear-gradient(135deg, var(--rose) 0%, var(--gold) 100%);
+    color: #2a0a18;
+    border: none;
+    padding: 1rem 2.8rem;
+    border-radius: 50px;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    cursor: pointer;
+    letter-spacing: 0.1em;
+    box-shadow: 0 0 30px rgba(212,160,76,0.4), 0 0 60px rgba(232,160,180,0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+    animation: fadeUp 1.6s ease both;
+  }
+  .btn-start:hover {
+    transform: scale(1.06);
+    box-shadow: 0 0 40px rgba(212,160,76,0.6), 0 0 80px rgba(232,160,180,0.3);
+  }
+
+  /* ============================================================
+     PANTALLA SLIDESHOW
+  ============================================================ */
+  #screen-slides {
+    overflow: hidden;
+    background: transparent;
+  }
+
+  /* Contenedor de slide */
+  .slide-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Slide individual */
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    opacity: 0;
+    transition: opacity 0.9s ease;
+    pointer-events: none;
+  }
+  .slide.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  /* Imagen */
+  .slide-img-container {
+    position: relative;
+    width: min(420px, 85vw);
+    height: min(420px, 55vh);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 2px rgba(232,160,180,0.4),
+      0 0 40px rgba(232,160,180,0.25),
+      0 20px 60px rgba(0,0,0,0.5);
+    margin-bottom: 1.8rem;
+    flex-shrink: 0;
+  }
+.slide-img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: rgb(156, 20, 225); /* opcional, relleno elegante */
+}
+  @keyframes kenBurns {
+    from { transform: scale(1.08) translate(-1%, -1%); }
+    to   { transform: scale(1.15) translate(1%, 1%); }
+  }
+  /* Marco decorativo dorado */
+  .slide-img-container::after {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border-radius: 15px;
+    border: 1px solid rgba(212,160,76,0.35);
+    pointer-events: none;
+  }
+
+  /* Frase */
+  .slide-quote {
+    max-width: min(500px, 90vw);
+    text-align: center;
+  }
+  .slide-quote .number {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+    display: block;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.8s 0.3s ease, transform 0.8s 0.3s ease;
+  }
+  .slide-quote blockquote {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 2.8vw, 1.4rem);
+    line-height: 1.7;
+    color: var(--cream);
+    text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.8s 0.6s ease, transform 0.8s 0.6s ease;
+  }
+  .slide.active .slide-quote .number,
+  .slide.active .slide-quote blockquote {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+
+  /* ============================================================
+     CONTROLES
+  ============================================================ */
+  #controls {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+  }
+  .btn-nav {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    border: 1px solid rgba(232,160,180,0.5);
+    background: rgba(255,255,255,0.07);
+    color: var(--rose2);
+    font-size: 1.4rem;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    transition: all 0.25s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .btn-nav:hover {
+    background: rgba(232,160,180,0.2);
+    border-color: var(--rose);
+    transform: scale(1.1);
+  }
+  #dots {
+    display: flex; gap: 8px; align-items: center;
+  }
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(232,160,180,0.35);
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+  .dot.active {
+    background: var(--rose);
+    transform: scale(1.4);
+    box-shadow: 0 0 8px var(--rose);
+  }
+
+  /* Contador */
+  #slide-counter {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    z-index: 50;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    color: rgba(232,160,180,0.6);
+  }
+
+#btn-home {
+  position: fixed !important;
+  top: 1.3rem !important;
+  left: 4.8rem !important;  /* justo al lado del botón música */
+  bottom: auto !important;
+  right: auto !important;
+
+  z-index: 999;
+
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(232,160,180,0.5);
+  background: rgba(255,255,255,0.07);
+  color: var(--rose2);
+  font-size: 1.1rem;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: all 0.3s;
+}
+
+#btn-home:hover {
+  background: rgba(232,160,180,0.2);
+  transform: scale(1.1);
+}
+
+#collage {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  height: 300px;
+  margin: 0 auto 2rem;
+}
+
+.slide {
+  overflow: hidden;
+}
+
+.collage-img {
+  position: absolute;
+  width: 120px;
+  height: 160px;
+  object-fit: cover;
+
+  border-radius: 12px;
+  border: 2px solid rgba(255,255,255,0.6);
+  background: white;
+  padding: 6px;
+
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+
+  transition: transform 0.4s ease;
+}
+
+.collage-img:hover {
+  transform: scale(1.08) rotate(0deg) !important;
+  z-index: 5;
+}
+
+  /* ============================================================
+     PANTALLA FINAL
+  ============================================================ */
+  #screen-final {
+    text-align: center;
+    padding: 2rem;
+    overflow: hidden;
+  }
+  .final-crown {
+    font-size: clamp(3rem, 8vw, 5rem);
+    display: block;
+    margin-bottom: 0.5rem;
+    animation: floatCrown 3s ease-in-out infinite;
+  }
+  @keyframes floatCrown {
+    0%, 100% { transform: translateY(0) rotate(-5deg); }
+    50%  { transform: translateY(-12px) rotate(5deg); }
+  }
+  #screen-final h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 6vw, 3.5rem);
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--rose2), var(--gold2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+    animation: fadeUp 1s ease both;
+  }
+  #screen-final .final-msg {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    color: var(--rose2);
+    max-width: 500px;
+    line-height: 1.8;
+    margin: 0 auto 2rem;
+    animation: fadeUp 1.3s ease both;
+  }
+  /* ============================================================
+     NOMBRE PERSONALIZADO - PUEDES CAMBIARLO AQUÍ
+  ============================================================ */
+  #nombre-novia {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.1rem, 3vw, 1.6rem);
+    color: var(--gold2);
+    letter-spacing: 0.1em;
+    margin-bottom: 2rem;
+    animation: fadeUp 1.5s ease both;
+  }
+  .btn-restart {
+    background: transparent;
+    border: 1px solid rgba(232,160,180,0.5);
+    color: var(--rose2);
+    padding: 0.7rem 2rem;
+    border-radius: 50px;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    letter-spacing: 0.1em;
+    transition: all 0.3s;
+    animation: fadeUp 1.7s ease both;
+  }
+  .btn-restart:hover {
+    background: rgba(232,160,180,0.15);
+    border-color: var(--rose);
+  }
+
+  /* ============================================================
+     CORAZONES FLOTANTES
+  ============================================================ */
+  #hearts-layer {
+    position: fixed; inset: 0; z-index: 5;
+    pointer-events: none; overflow: hidden;
+  }
+  .floating-heart {
+    position: absolute;
+    bottom: -60px;
+    font-size: 1.2rem;
+    animation: floatUp linear infinite;
+    opacity: 0;
+  }
+  @keyframes floatUp {
+    0%   { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 0; }
+    10%  { opacity: 0.7; }
+    80%  { opacity: 0.4; }
+    100% { transform: translateY(-110vh) rotate(360deg) scale(1.2); opacity: 0; }
+  }
+
+  /* ============================================================
+     CRIATURAS NADANDO 🐋🐢
+  ============================================================ */
+  #creatures-layer {
+    position: fixed; inset: 0; z-index: 6;
+    pointer-events: none; overflow: hidden;
+  }
+  .creature {
+    position: absolute;
+    font-size: 2rem;
+    will-change: transform;
+    filter: drop-shadow(0 0 6px rgba(232,160,180,0.35));
+    transition: filter 0.3s;
+  }
+  /* Tortugas son un poco más pequeñas */
+  .creature.turtle { font-size: 1.6rem; }
+
+  /* ============================================================
+     CONTROL DE MÚSICA
+  ============================================================ */
+  #music-btn {
+    position: fixed;
+    top: 1.3rem;
+    left: 1.3rem;
+    z-index: 100;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(232,160,180,0.4);
+    background: rgba(255,255,255,0.07);
+    color: var(--rose2);
+    font-size: 1.1rem;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    transition: all 0.3s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  #music-btn:hover { background: rgba(232,160,180,0.2); }
+  #music-btn.playing { color: var(--gold2); border-color: var(--gold); }
+
+  /* Barra de volumen */
+  #vol-wrap {
+    position: fixed;
+    top: 1.3rem;
+    left: 4.2rem;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+  #vol-wrap.visible { opacity: 1; pointer-events: all; }
+  #vol-slider {
+    -webkit-appearance: none;
+    width: 80px;
+    height: 3px;
+    border-radius: 3px;
+    background: rgba(232,160,180,0.3);
+    outline: none;
+  }
+  #vol-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--rose);
+    cursor: pointer;
+  }
+
+  /* ============================================================
+     BARRA DE PROGRESO
+  ============================================================ */
+  #progress-bar {
+    position: fixed;
+    bottom: 0; left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--rose), var(--gold));
+    transition: width 0.8s ease;
+    z-index: 50;
+    box-shadow: 0 0 8px var(--rose);
+  }
+
+  /* ============================================================
+     RESPONSIVE
+  ============================================================ */
+  @media (max-width: 480px) {
+    .slide { padding: 1.2rem 1rem 6rem; justify-content: flex-start; padding-top: 3rem; }
+    .slide-img-container { width: 88vw; height: 50vw; min-height: 180px; margin-bottom: 1.2rem; }
+  }
+  @media (orientation: landscape) and (max-height: 500px) {
+    .slide { flex-direction: row; gap: 2rem; padding: 1rem 2rem 5rem; }
+    .slide-img-container { width: 40vw; height: 72vh; margin-bottom: 0; }
+    .slide-quote { text-align: left; max-width: 45vw; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     CANVAS ESTRELLAS
+============================================================ -->
+<canvas id="stars-canvas"></canvas>
+
+<!-- ============================================================
+     CAPA DE CORAZONES FLOTANTES
+============================================================ -->
+<div id="hearts-layer"></div>
+
+<div id="creatures-layer"></div>
+
+<!-- ============================================================
+     CONTROL DE MÚSICA
+     🎵 CAMBIA LA MÚSICA: reemplaza la URL en src del <audio>
+     O bien coloca tu archivo .mp3 en la misma carpeta y
+     cambia src="TU_ARCHIVO.mp3"
+============================================================ -->
+<button id="music-btn" title="Música">🎵</button>
+<div id="vol-wrap">
+  <span style="font-size:0.7rem;color:var(--rose2);">🔈</span>
+  <input type="range" id="vol-slider" min="0" max="1" step="0.05" value="0.5">
+  <span style="font-size:0.7rem;color:var(--rose2);">🔊</span>
+</div>
+
+<!--
+  🎵 MÚSICA: Puedes usar cualquier URL directa a un archivo .mp3
+  o colocar un archivo local llamado "musica.mp3" en la misma
+  carpeta que este HTML y cambiar la línea src="" abajo.
+  La música usada aquí es un ejemplo con audio de dominio público.
+-->
+<audio id="bg-music" loop preload="none">
+  <!-- CAMBIA ESTA URL POR TU ARCHIVO DE MÚSICA -->
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_115b9b5e77.mp3?filename=happy-birthday-to-you-piano-version-112193.mp3" type="audio/mpeg">
+</audio>
+
+<!-- ============================================================
+     BARRA DE PROGRESO
+============================================================ -->
+<div id="progress-bar"></div>
+<div id="slide-counter"></div>
+
+<!-- ===========================================================
+     PANTALLA 1: INTRO
+============================================================ -->
+<div class="screen" id="screen-intro">
+  <span class="heart-big">❤️</span>
+  <h1>Tengo algo especial para ti</h1>
+  <!--
+    ✏️ CAMBIA EL NOMBRE AQUÍ ↓
+  -->
+  <p>Para La Persona Que e Alegra Día a Día</p>
+  <button class="btn-start" onclick="iniciarExperiencia()">
+    Empieza Este Recorrido ✨
+  </button>
+</div>
+
+<!-- ===========================================================
+     PANTALLA 2: SLIDESHOW
+============================================================ -->
+<div class="screen hidden" id="screen-slides">
+  <div class="slide-wrapper" id="slide-wrapper">
+    <!-- Los slides se generan con JavaScript -->
+  </div>
+</div>
+
+<!-- Controles de navegación -->
+<div id="controls" style="display:none;">
+  <button class="btn-nav" onclick="prevSlide()" title="Anterior">‹</button>
+  <div id="dots"></div>
+  <button class="btn-nav" onclick="nextSlide()" title="Siguiente">›</button>
+  
+</div>
+<button id="btn-home" onclick="volverInicio()" title="Inicio">🏠</button>
+
+
+<!-- ===========================================================
+     PANTALLA 3: FINAL
+============================================================ -->
+<div class="screen hidden" id="screen-final">
+  <span class="final-crown">👑</span>
+  <!--
+    ✏️ CAMBIA EL MENSAJE FINAL AQUÍ ↓
+  -->
+  <h2>Feliz Cumpleaños,<br>Amor de mi vida</h2>
+<p class="final-msg">
+  Hoy el mundo celebra que naciste, pero yo celebro que existas en mi vida.<br>
+  Eres mi casualidad más bonita, mi pensamiento constante,<br>
+  y el motivo por el que mi corazón sonríe incluso en los días grises.<br><br>
+
+  Gracias por ser luz, por ser paz, por ser amor en su forma más pura.<br>
+  Ojalá la vida me regale mil cumpleaños más a tu lado,<br>
+  para seguir viéndote brillar, crecer y ser feliz…<br>
+  porque tu felicidad es también la mía.<br><br>
+
+  Feliz cumpleaños, amor de mi vida. 💖
+</p>
+  <!--
+    ✏️ CAMBIA EL NOMBRE DE TU NOVIA AQUÍ ↓
+  -->
+  <div id="nombre-novia">Con todo mi amor ❤️</div>
+  <button class="btn-restart" onclick="reiniciar()">Volver a ver ↺</button>
+</div>
+
+<script>
+/* ==============================================================
+   ██████  ██████   ██████  ████████  ██████  ███████
+   ██      ██    ██ ██         ██    ██    ██ ██
+   █████   ██    ██ ██         ██    ██    ██ ███████
+   ██      ██    ██ ██         ██    ██    ██      ██
+   ██      ██████   ██████     ██     ██████  ███████
+
+   AQUÍ PUEDES PERSONALIZAR TODO
+================================================================ */
+
+/*
+  ╔══════════════════════════════════════════════════════╗
+  ║  📸 FOTOS Y FRASES                                  ║
+  ║  Cambia las URLs de las fotos y las frases          ║
+  ║  Puedes agregar o quitar objetos del array          ║
+  ╚══════════════════════════════════════════════════════╝
+
+  Para usar tus fotos locales:
+    - Coloca las imágenes en la misma carpeta que este archivo HTML
+    - Cambia la URL por el nombre del archivo, p.ej.: "foto1.jpg"
+
+  Para usar fotos de internet:
+    - Pega la URL directa de la imagen
+*/
+const slides = [
+  {
+    foto: "Fotos/Foto1.jpg",
+    frase: "Desde el primer momento que te vi, supe que el destino había conspirado para traerte a mi vida."
+  },
+  {
+    foto: "Fotos/Foto2.jpg",
+    frase: "Tu risa es mi melodía favorita, la que silencia todo el ruido del mundo."
+  },
+  {
+    foto: "Fotos/Foto3.jpg",
+    frase: "Eres la respuesta a preguntas que aún no sabía hacerme y de las cuales me hacia no tenia respuesta"
+  },
+  {
+    foto: "Fotos/Foto4.jpg",
+    frase: "Cada día contigo es una nueva página de la historia más bella que he vivido y la cual quiero seguir viviendo"
+  },
+  {
+    foto: "Fotos/Foto5.jpg",
+    frase: "En un universo infinito, lo más afortunado fue cruzarme en tu camino y que, de todas las personas existentes, me escogieras como tu compañero de vida."
+
+  },
+  {
+    foto: "Fotos/Foto7.jpeg",
+    frase: "Espero que la vida me regale el privilegio infinito de seguir caminando a tu lado, de acompañarte en cada cumpleaños y en cada sueño cumplido, celebrando tus logros como si latieran dentro de mí, porque tu felicidad es también la mía. 💖"
+  },
+   {
+     foto: "Fotos/Foto6.jpg",
+    frase: "Hoy celebramos otro año de tu existencia, y el mundo es más brillante porque tú estás en él."
+  }
+];
+
+/* ============================================================
+   🎵 MÚSICA
+   Para cambiar la música, edita el atributo src del
+   elemento <audio id="bg-music"> arriba en el HTML
+============================================================ */
+
+/* ============================================================
+   VARIABLES INTERNAS - No es necesario modificar esto
+============================================================ */
+let currentSlide  = 0;
+let musicPlaying  = false;
+let heartsInterval = null;
+
+const music     = document.getElementById('bg-music');
+const musicBtn  = document.getElementById('music-btn');
+const volSlider = document.getElementById('vol-slider');
+const volWrap   = document.getElementById('vol-wrap');
+const progressBar = document.getElementById('progress-bar');
+const counter   = document.getElementById('slide-counter');
+const dotsWrap  = document.getElementById('dots');
+
+/*===================================Collage===================================================*/
+function crearCollage() {
+  const container = document.getElementById("collage");
+
+  if (!container) {
+    console.log("collage aún no existe");
+    return;
+  }
+
+  container.innerHTML = "";
+
+  const fotos = [
+    "https://lh3.googleusercontent.com/d/15Wlly_ZCVkuideUNTktwHm-7RmDdHxzX",
+    "https://lh3.googleusercontent.com/d/1gUedW3U9sFKUBXFpkk4cgsVbRN23G1cM",
+    "https://lh3.googleusercontent.com/d/1DTvT_asWFP62-iB6O_iMffR2RMWi5uCe",
+    "https://lh3.googleusercontent.com/d/1qWEtYKAETbzLPp2ipf7xl2_G2dBPZZpm",
+    "https://lh3.googleusercontent.com/d/1YE1B9kXV999QmHCDfaI0EIfNS2-9Vf7P"
+  ];
+
+  const posiciones = [
+    {x: 0, y: 10},
+    {x: 20, y: 0},
+    {x: 40, y: 15},
+    {x: 60, y: 5},
+    {x: 30, y: 30}
+  ];
+
+  fotos.forEach((foto, i) => {
+    const img = document.createElement("img");
+    img.src = foto;
+    img.className = "collage-img";
+
+    img.onerror = () => {
+      console.log("❌ Error cargando imagen:", foto);
+    };
+
+    img.onload = () => {
+      console.log("✅ Imagen cargada:", foto);
+    };
+
+    const rot = -10 + Math.random() * 20;
+
+    img.style.left = (posiciones[i]?.x || 0) + "%";
+    img.style.top  = (posiciones[i]?.y || 0) + "%";
+    img.style.transform = `rotate(${rot}deg)`;
+
+    container.appendChild(img);
+  });
+}
+/* ==============================================================
+   GENERAR SLIDES
+================================================================ */
+function buildSlides() {
+  const wrapper = document.getElementById('slide-wrapper');
+  wrapper.innerHTML = '';
+  dotsWrap.innerHTML = '';
+
+  slides.forEach((s, i) => {
+    const div = document.createElement('div');
+    div.className = 'slide' + (i === 0 ? ' active' : '');
+
+    div.innerHTML = `
+      <div class="slide-img-container">
+        <img src="${s.foto}" alt="Recuerdo ${i+1}" loading="lazy">
+      </div>
+      <div class="slide-quote">
+        <span class="number">— ${String(i+1).padStart(2,'0')} —</span>
+        <blockquote>"${s.frase}"</blockquote>
+      </div>
+    `;
+
+    wrapper.appendChild(div);
+
+    const dot = document.createElement('span');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => goToSlide(i);
+    dotsWrap.appendChild(dot);
+  });
+
+  /* 👇 AGREGAMOS EL SLIDE COLLAGE */
+  const collageSlide = document.createElement('div');
+  collageSlide.className = 'slide';
+
+  collageSlide.innerHTML = `
+    <div id="collage"></div>
+    <div class="slide-quote">
+      <blockquote>"Todos nuestros momentos en un solo lugar ❤️"</blockquote>
+    </div>
+  `;
+
+  wrapper.appendChild(collageSlide);
+
+  const dot = document.createElement('span');
+  dot.className = 'dot';
+  dot.onclick = () => goToSlide(slides.length);
+  dotsWrap.appendChild(dot);
+
+  updateCounter();
+  updateProgress();
+
+
+}
+/* ==============================================================
+   NAVEGACIÓN
+================================================================ */
+function goToSlide(index) {
+  const allSlides = document.querySelectorAll('.slide');
+  const allDots   = document.querySelectorAll('.dot');
+
+  /* Si pasamos del último → pantalla final */
+  if (index >= slides.length) {
+    showFinal();
+    return;
+  }
+  if (index < 0) return;
+
+  allSlides[currentSlide].classList.remove('active');
+  allDots[currentSlide].classList.remove('active');
+
+  currentSlide = index;
+
+  allSlides[currentSlide].classList.add('active');
+  allDots[currentSlide].classList.add('active');
+
+  updateCounter();
+  updateProgress();
+}
+
+function nextSlide() { goToSlide(currentSlide + 1); }
+function prevSlide() { goToSlide(currentSlide - 1 < 0 ? 0 : currentSlide - 1); }
+
+function updateCounter() {
+  counter.textContent = `${currentSlide + 1} / ${slides.length}`;
+}
+function updateProgress() {
+  const pct = ((currentSlide + 1) / slides.length) * 100;
+  progressBar.style.width = pct + '%';
+}
+
+/* Swipe táctil */
+let touchStartX = 0;
+document.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].clientX; });
+document.addEventListener('touchend',   e => {
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if (Math.abs(dx) > 50) dx < 0 ? nextSlide() : prevSlide();
+});
+
+/* Teclado */
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight') nextSlide();
+  if (e.key === 'ArrowLeft')  prevSlide();
+});
+
+/* ==============================================================
+   FLUJO DE PANTALLAS
+================================================================ */
+function mostrar(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+}
+
+
+function iniciarExperiencia() {
+  buildSlides();
+  mostrar('screen-slides');
+
+  
+
+  document.getElementById('controls').style.display = 'flex';
+  counter.style.display = '';
+  startHearts();
+
+  reproducirMusica();
+}
+
+function showFinal() {
+  document.getElementById('controls').style.display = 'none';
+  counter.style.display = 'none';
+  mostrar('screen-final');
+  launchFinalHearts();
+}
+
+function reiniciar() {
+  currentSlide = 0;
+  mostrar('screen-slides');
+  buildSlides();
+  document.getElementById('controls').style.display = 'flex';
+  counter.style.display = '';
+}
+
+
+function volverInicio() {
+  currentSlide = 0;
+  mostrar('screen-intro');
+  document.getElementById('controls').style.display = 'none';
+  counter.style.display = 'none';
+}
+/* ==============================================================
+   MÚSICA
+================================================================ */
+function reproducirMusica() {
+  music.volume = parseFloat(volSlider.value);
+  music.play().then(() => {
+    musicPlaying = true;
+    musicBtn.textContent = '🎶';
+    musicBtn.classList.add('playing');
+  }).catch(() => {
+    /* El navegador bloqueó — el botón manual lo activará */
+  });
+}
+
+musicBtn.addEventListener('click', () => {
+  volWrap.classList.toggle('visible');
+  if (musicPlaying) {
+    music.pause();
+    musicPlaying = false;
+    musicBtn.textContent = '🎵';
+    musicBtn.classList.remove('playing');
+  } else {
+    reproducirMusica();
+  }
+});
+
+volSlider.addEventListener('input', () => {
+  music.volume = parseFloat(volSlider.value);
+});
+
+/* ==============================================================
+   CORAZONES FLOTANTES
+================================================================ */
+const heartEmojis = ['❤️','💖','💗','💕','💝','🌸','✨','💫'];
+
+function crearCorazon() {
+  const layer = document.getElementById('hearts-layer');
+  const el = document.createElement('span');
+  el.className = 'floating-heart';
+  el.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+
+  const size  = 0.8 + Math.random() * 1.4;
+  const left  = Math.random() * 100;
+  const dur   = 6 + Math.random() * 8;
+  const delay = Math.random() * 3;
+
+  el.style.cssText = `
+    left: ${left}%;
+    font-size: ${size}rem;
+    animation-duration: ${dur}s;
+    animation-delay: ${delay}s;
+  `;
+
+  layer.appendChild(el);
+  setTimeout(() => el.remove(), (dur + delay + 1) * 1000);
+}
+
+function startHearts() {
+  if (heartsInterval) clearInterval(heartsInterval);
+  heartsInterval = setInterval(crearCorazon, 800);
+  /* Unos pocos al inicio */
+  for (let i = 0; i < 5; i++) setTimeout(crearCorazon, i * 200);
+}
+
+function launchFinalHearts() {
+  /* Lluvia de corazones en el final */
+  let count = 0;
+  const burst = setInterval(() => {
+    crearCorazon();
+    if (++count > 30) clearInterval(burst);
+  }, 120);
+}
+
+/* ==============================================================
+   CANVAS DE ESTRELLAS
+================================================================ */
+(function initStars() {
+  const canvas = document.getElementById('stars-canvas');
+  const ctx    = canvas.getContext('2d');
+  let stars    = [];
+
+  function resize() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+    stars = Array.from({ length: 160 }, () => ({
+      x:   Math.random() * canvas.width,
+      y:   Math.random() * canvas.height,
+      r:   Math.random() * 1.5,
+      a:   Math.random(),
+      da:  (Math.random() * 0.004 + 0.001) * (Math.random() < 0.5 ? 1 : -1)
+    }));
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    stars.forEach(s => {
+      s.a = Math.max(0.05, Math.min(1, s.a + s.da));
+      if (s.a <= 0.05 || s.a >= 1) s.da *= -1;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,240,255,${s.a})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  draw();
+})();
+
+/* ==============================================================
+   CRIATURAS NADANDO 🐋🐢
+   Ballenas y tortugas se mueven por toda la pantalla con
+   trayectorias sinusoidales suaves, rebotando en los bordes
+================================================================ */
+(function initCreatures() {
+  const layer = document.getElementById('creatures-layer');
+
+  /* Configuración de criaturas */
+  const tipos = [
+    { emoji: '🐋', clase: 'whale',  velocidad: 0.6, amplitud: 60,  cantidad: 3 },
+    { emoji: '🐢', clase: 'turtle', velocidad: 0.35, amplitud: 40, cantidad: 4 },
+  ];
+
+  const criaturas = [];
+
+  function crearCriatura(tipo) {
+    const el = document.createElement('span');
+    el.className = `creature ${tipo.clase}`;
+    el.textContent = tipo.emoji;
+    layer.appendChild(el);
+
+    /* Posición y dirección iniciales aleatorias */
+    const goingRight = Math.random() < 0.5;
+    const startY = 20 + Math.random() * 60; /* % de la pantalla */
+
+    return {
+      el,
+      x: goingRight ? -80 : window.innerWidth + 80,
+      y: (startY / 100) * window.innerHeight,
+      vx: (tipo.velocidad + Math.random() * 0.3) * (goingRight ? 1 : -1),
+      baseY: (startY / 100) * window.innerHeight,
+      amplitud: tipo.amplitud + Math.random() * 30,
+      frecuencia: 0.0008 + Math.random() * 0.0006,
+      fase: Math.random() * Math.PI * 2,
+      goingRight,
+      tipo,
+      t: Math.random() * 10000, /* offset de tiempo para variar ondas */
+    };
+  }
+
+  /* Inicializar todas las criaturas */
+  tipos.forEach(tipo => {
+    for (let i = 0; i < tipo.cantidad; i++) {
+      /* Espaciar el tiempo de entrada */
+      setTimeout(() => {
+        criaturas.push(crearCriatura(tipo));
+      }, i * (2000 + Math.random() * 3000));
+    }
+  });
+
+  function animar(timestamp) {
+    criaturas.forEach(c => {
+      c.t += 16;
+
+      /* Movimiento horizontal */
+      c.x += c.vx;
+
+      /* Movimiento vertical sinusoidal suave */
+      c.y = c.baseY + Math.sin(c.t * c.frecuencia + c.fase) * c.amplitud;
+
+      /* Mantener Y dentro de pantalla */
+      const margin = 60;
+      c.y = Math.max(margin, Math.min(window.innerHeight - margin, c.y));
+
+      /* Actualizar baseY lentamente para que deriven verticalmente */
+      c.baseY += Math.sin(c.t * 0.00015) * 0.15;
+      c.baseY = Math.max(80, Math.min(window.innerHeight - 80, c.baseY));
+
+      /* Voltear emoji cuando cambia dirección (rebote en bordes) */
+      const outRight = c.x > window.innerWidth + 100;
+      const outLeft  = c.x < -100;
+
+      if (outRight || outLeft) {
+        /* Sale de pantalla → reposicionar en el lado opuesto */
+        c.goingRight = outRight ? false : true;
+        c.vx = Math.abs(c.vx) * (c.goingRight ? 1 : -1);
+        c.x  = c.goingRight ? -80 : window.innerWidth + 80;
+        c.baseY = 80 + Math.random() * (window.innerHeight - 160);
+        c.y = c.baseY;
+      }
+
+      /* Espejo horizontal según dirección */
+      const scaleX = c.goingRight ? 1 : -1;
+      /* Leve bobbing vertical adicional */
+      const bobY = Math.sin(c.t * 0.003) * 4;
+
+      c.el.style.transform = `translate(${c.x}px, ${c.y + bobY}px) scaleX(${scaleX})`;
+      c.el.style.opacity = '0.75';
+    });
+
+    requestAnimationFrame(animar);
+  }
+
+  requestAnimationFrame(animar);
+
+  /* Reajustar baseY al hacer resize */
+  window.addEventListener('resize', () => {
+    criaturas.forEach(c => {
+      c.baseY = Math.min(c.baseY, window.innerHeight - 80);
+    });
+  });
+})();
+
+
+
+</script>
+</body>
+</html>
